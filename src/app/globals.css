@@ -24,3 +24,187 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* ========== ぷよぷよ ゲームスタイル ========== */
+
+/* ゲームボード */
+.puyo-board {
+  width: 240px;
+  height: 480px;
+  background: #0d1117;
+  border: 2px solid #30363d;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255,255,255,0.05);
+}
+
+.puyo-empty {
+  width: 100%;
+  height: 100%;
+}
+
+/* ぷよ基本形状 */
+.puyo-cell {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: var(--puyo-gradient);
+  box-shadow:
+    inset -3px -3px 6px rgba(0, 0, 0, 0.35),
+    inset 4px 4px 8px rgba(255, 255, 255, 0.45);
+  /* 隣接するぷよと自然に重なるよう少し大きく表示 */
+  transform: scale(1.08);
+  z-index: 1;
+}
+
+/* くっつき表現: 接続方向の角を平らにして隣のぷよと溶け込む */
+.puyo-cell[data-top="1"] {
+  border-top-left-radius: 32%;
+  border-top-right-radius: 32%;
+}
+.puyo-cell[data-bottom="1"] {
+  border-bottom-left-radius: 32%;
+  border-bottom-right-radius: 32%;
+}
+.puyo-cell[data-left="1"] {
+  border-top-left-radius: 32%;
+  border-bottom-left-radius: 32%;
+}
+.puyo-cell[data-right="1"] {
+  border-top-right-radius: 32%;
+  border-bottom-right-radius: 32%;
+}
+
+/* 2方向接続: コーナーをさらに平らに */
+.puyo-cell[data-top="1"][data-left="1"]     { border-top-left-radius: 12%; }
+.puyo-cell[data-top="1"][data-right="1"]    { border-top-right-radius: 12%; }
+.puyo-cell[data-bottom="1"][data-left="1"]  { border-bottom-left-radius: 12%; }
+.puyo-cell[data-bottom="1"][data-right="1"] { border-bottom-right-radius: 12%; }
+
+/* 3方向・4方向接続: さらに角をなくす */
+.puyo-cell[data-top="1"][data-left="1"][data-bottom="1"]    { border-top-left-radius: 6%; border-bottom-left-radius: 6%; }
+.puyo-cell[data-top="1"][data-right="1"][data-bottom="1"]   { border-top-right-radius: 6%; border-bottom-right-radius: 6%; }
+.puyo-cell[data-left="1"][data-top="1"][data-right="1"]     { border-top-left-radius: 6%; border-top-right-radius: 6%; }
+.puyo-cell[data-left="1"][data-bottom="1"][data-right="1"]  { border-bottom-left-radius: 6%; border-bottom-right-radius: 6%; }
+
+/* 消去アニメーション */
+@keyframes puyo-clear {
+  0%   { opacity: 1; transform: scale(1.08);  filter: brightness(1); }
+  25%  { opacity: 1; transform: scale(1.4);   filter: brightness(2.5); }
+  60%  { opacity: 0.6; transform: scale(0.75); filter: brightness(1.5); }
+  100% { opacity: 0; transform: scale(0);     filter: brightness(1); }
+}
+
+.puyo-cell[data-clearing="1"] {
+  animation: puyo-clear 0.3s ease-out forwards;
+  pointer-events: none;
+}
+
+/* 連鎖テキストエフェクト */
+@keyframes chain-popup {
+  0%   { opacity: 0; transform: scale(0.4) translateY(10px); }
+  25%  { opacity: 1; transform: scale(1.15) translateY(0); }
+  65%  { opacity: 1; transform: scale(1) translateY(0); }
+  100% { opacity: 0; transform: scale(0.85) translateY(-10px); }
+}
+
+.chain-effect {
+  animation: chain-popup 0.75s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  filter: drop-shadow(0 0 12px rgba(255, 200, 0, 0.6));
+}
+
+/* ゲームオーバー / スタートオーバーレイ */
+.game-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.82);
+  backdrop-filter: blur(4px);
+  border-radius: 6px;
+  animation: overlay-fade-in 0.3s ease forwards;
+  z-index: 20;
+}
+
+@keyframes overlay-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.overlay-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1.5rem;
+}
+
+.overlay-title {
+  font-size: 2rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  color: white;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, #ffffff, #a0aec0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.start-button {
+  padding: 0.65rem 2rem;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  font-weight: 700;
+  font-size: 1rem;
+  border: none;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+}
+
+.start-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(102, 126, 234, 0.55);
+}
+
+.start-button:active {
+  transform: translateY(0);
+}
+
+/* スコアカード */
+.score-card {
+  background: #f4f4f5;
+  border-radius: 10px;
+  padding: 0.5rem 0.75rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  .score-card {
+    background: #27272a;
+  }
+}
+
+.score-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #71717a;
+  margin-bottom: 0.1rem;
+}
+
+.score-value {
+  font-size: 1.1rem;
+  font-weight: 800;
+  font-family: var(--font-geist-mono), monospace;
+  color: #18181b;
+}
+
+@media (prefers-color-scheme: dark) {
+  .score-value {
+    color: #f4f4f5;
+  }
+}
