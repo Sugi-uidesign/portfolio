@@ -43,6 +43,16 @@ body {
   height: 100%;
 }
 
+/* ぷよの表情 SVG */
+.puyo-face {
+  position: absolute;
+  inset: 8% 8% 20% 8%;
+  width: 84%;
+  height: 72%;
+  pointer-events: none;
+  z-index: 2;
+}
+
 /* ぷよ基本形状 */
 .puyo-cell {
   position: relative;
