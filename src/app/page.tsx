@@ -2,6 +2,7 @@ import Image from 'next/image';
 import NavBar from '@/components/portfolio/NavBar';
 
 const SERIF = '"Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", serif';
+const IMG_BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
 
 const works = [
   {
@@ -11,7 +12,7 @@ const works = [
     description:
       'Anthropic Claude を活用したタスク管理と AI エージェントワークフローの設計・実装',
     tags: ['Claude', 'AI Agent', 'Automation'],
-    image: '/image/claude.jpg',
+    image: `${IMG_BASE}/image/claude.jpg`,
   },
   {
     id: 2,
@@ -20,7 +21,7 @@ const works = [
     description:
       'Gemini Pro を用いたマルチモーダル対話型 AI アプリケーションの開発',
     tags: ['Gemini', 'Multimodal', 'Google AI'],
-    image: '/image/gemini.jpg',
+    image: `${IMG_BASE}/image/gemini.jpg`,
   },
   {
     id: 3,
@@ -29,7 +30,7 @@ const works = [
     description:
       'Next.js + TypeScript による AI ペアプログラミングでのゲーム開発実践',
     tags: ['Next.js', 'TypeScript', 'Game'],
-    image: '/image/puyopuyo.jpg',
+    image: `${IMG_BASE}/image/puyopuyo.jpg`,
   },
   {
     id: 4,
@@ -38,7 +39,7 @@ const works = [
     description:
       'Claude Code × VS Code による AI ファーストな開発ワークフローの構築',
     tags: ['Claude Code', 'VS Code', 'DX'],
-    image: '/image/Antigravity.jpg',
+    image: `${IMG_BASE}/image/Antigravity.jpg`,
   },
 ];
 
