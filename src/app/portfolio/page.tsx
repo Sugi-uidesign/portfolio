@@ -137,12 +137,9 @@ export default function PortfolioPage() {
         <p className="text-[#888888] text-sm leading-[1.8] mb-8">
           お仕事のご依頼・ご相談はこちらからお気軽にどうぞ
         </p>
-        <a
-          href="mailto:sugi.libero@gmail.com"
-          className="inline-block px-8 py-3 rounded-full text-sm font-medium text-white bg-[#e8a4b8] hover:bg-[#d48fa3] hover:shadow-[0_10px_30px_rgba(232,164,184,0.4)] transition-all duration-300"
-        >
-          sugi.libero@gmail.com
-        </a>
+        <span className="inline-block px-8 py-3 rounded-full text-sm font-medium text-white bg-[#e8a4b8]">
+          CONTACT
+        </span>
       </section>
 
       {/* Footer */}
